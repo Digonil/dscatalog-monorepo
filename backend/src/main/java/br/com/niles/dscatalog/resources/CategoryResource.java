@@ -1,23 +1,25 @@
 package br.com.niles.dscatalog.resources;
 
 import br.com.niles.dscatalog.entities.Category;
+import br.com.niles.dscatalog.services.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryResource {
 
+    @Autowired
+    private CategoryService service;
+
     @GetMapping
     public ResponseEntity<List<Category>> findAll() {
-        List<Category> categories = new ArrayList<>();
-        categories.add(new Category(1L, "Books"));
-        categories.add(new Category(2L, "Electronics"));
+        List<Category> categories = service.findAll();
         return ResponseEntity.ok().body(categories);
     }
 }
