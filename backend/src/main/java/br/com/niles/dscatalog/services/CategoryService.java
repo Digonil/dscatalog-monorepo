@@ -1,12 +1,15 @@
 package br.com.niles.dscatalog.services;
 
+import br.com.niles.dscatalog.dto.CategoryDto;
 import br.com.niles.dscatalog.entities.Category;
 import br.com.niles.dscatalog.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -15,8 +18,9 @@ public class CategoryService {
     private CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public List<Category> findAll() {
+    public List<CategoryDto> findAll() {
         List<Category> categories = repository.findAll();
-        return categories;
+        List<CategoryDto> categoriesDto = categories.stream().map(x -> new CategoryDto(x)).collect(Collectors.toList());
+        return categoriesDto;
     }
 }
