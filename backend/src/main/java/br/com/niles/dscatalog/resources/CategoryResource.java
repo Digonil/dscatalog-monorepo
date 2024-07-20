@@ -5,9 +5,7 @@ import br.com.niles.dscatalog.entities.Category;
 import br.com.niles.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,11 @@ public class CategoryResource {
     public ResponseEntity<List<CategoryDto>> findAll() {
         List<CategoryDto> categories = service.findAll();
         return ResponseEntity.ok().body(categories);
+    }
+
+    @GetMapping(value = "{id}")
+    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
+        CategoryDto categoryDto = service.findById(id);
+        return ResponseEntity.ok().body(categoryDto);
     }
 }

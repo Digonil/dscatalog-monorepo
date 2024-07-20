@@ -2,11 +2,13 @@ package br.com.niles.dscatalog.dto;
 
 import br.com.niles.dscatalog.entities.Category;
 
+import java.util.Optional;
+
 public class CategoryDto {
     private Long id;
     private String name;
 
-    public CategoryDto() {
+    public CategoryDto(Optional<Category> category) {
     }
 
     public CategoryDto(Long id, String name) {
