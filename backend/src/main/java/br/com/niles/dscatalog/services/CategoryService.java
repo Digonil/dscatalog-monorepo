@@ -7,9 +7,12 @@ import br.com.niles.dscatalog.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +25,9 @@ public class CategoryService {
     private CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public List<CategoryDto> findAll() {
-        List<Category> categories = repository.findAll();
-        List<CategoryDto> categoriesDto = categories.stream().map(x -> new CategoryDto(x)).collect(Collectors.toList());
+    public Page<CategoryDto> findAllPaged(PageRequest pageRequest) {
+        Page<Category> categories = repository.findAll(pageRequest);
+        Page<CategoryDto> categoriesDto = categories.map(x -> new CategoryDto(x));
         return categoriesDto;
     }
 
@@ -65,4 +68,5 @@ public class CategoryService {
             throw new ResourceNotFoundException("Falha de integridade referencial.");
         }
     }
+
 }
