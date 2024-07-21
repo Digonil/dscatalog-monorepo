@@ -1,5 +1,6 @@
 package br.com.niles.dscatalog.entities;
 
+import br.com.niles.dscatalog.dto.CategoryDto;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -7,6 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_category")
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +20,10 @@ public class Category {
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Category(CategoryDto categoryDto) {
+        this.name = categoryDto.getName();
     }
 
     public Long getId() {
